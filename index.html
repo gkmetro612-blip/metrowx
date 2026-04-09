@@ -280,7 +280,7 @@
     <textarea id="stationInput" spellcheck="false"></textarea>
     <div class="modal-hint">Example: KFUL, KLAX, KSNA, KLGB, KBUR</div>
     <label>Auto-refresh (minutes)</label>
-    <input type="number" id="refreshInput" min="1" max="60" value="5">
+    <input type="number" id="refreshInput" min="1" max="60" value="1">
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeSettings()">Cancel</button>
       <button class="btn btn-primary" onclick="saveSettings()">Save &amp; Reload</button>
@@ -321,7 +321,7 @@ const DEFAULT_STATIONS=[
 const AWC_METAR='/awc-api/data/metar';
 const AWC_TAF='/awc-api/data/taf';
 let stations=loadStations();
-let refreshMin=5;try{refreshMin=parseInt(localStorage.getItem('wxboard_refresh')||'5',10);}catch(e){}
+let refreshMin=1;try{refreshMin=parseInt(localStorage.getItem('wxboard_refresh')||'1',10);}catch(e){}
 let refreshTimer,metarData={},tafData={},demoMode=false;
 function loadStations(){
   try{
