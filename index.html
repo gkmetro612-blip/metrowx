@@ -6,576 +6,488 @@
 <title>METRO WXBoard</title>
 <meta name="theme-color" content="#0a0e14">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
-  :root {
-    --bg:#0a0e14; --card:#111820; --card-border:#1a2230;
-    --text:#eaf0f6; --text-dim:#8a9bb0; --text-muted:#5a6d82;
-    --vfr:#2ecc40; --mvfr:#3498db; --ifr:#e74c3c; --lifr:#e056c0;
-    --vfr-bg:rgba(46,204,64,.08); --mvfr-bg:rgba(52,152,219,.08);
-    --ifr-bg:rgba(231,76,60,.08); --lifr-bg:rgba(224,86,192,.08);
-    --vfr-border:rgba(46,204,64,.25); --mvfr-border:rgba(52,152,219,.25);
-    --ifr-border:rgba(231,76,60,.25); --lifr-border:rgba(224,86,192,.25);
-    --warn:#f0c040; --danger:#e74c3c;
-    --accent:#f0c040; --radius:6px;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+:root {
+--bg:#0a0e14; --card:#111820; --card-border:#1a2230;
+--text:#eaf0f6; --text-dim:#8a9bb0; --text-muted:#5a6d82;
+--vfr:#2ecc40; --mvfr:#3498db; --ifr:#e74c3c; --lifr:#e056c0;
+--vfr-bg:rgba(46,204,64,.08); --mvfr-bg:rgba(52,152,219,.08);
+--ifr-bg:rgba(231,76,60,.08); --lifr-bg:rgba(224,86,192,.08);
+--vfr-border:rgba(46,204,64,.25); --mvfr-border:rgba(52,152,219,.25);
+--ifr-border:rgba(231,76,60,.25); --lifr-border:rgba(224,86,192,.25);
+--warn:#f0c040; --danger:#e74c3c;
+--accent:#f0c040; --radius:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
-  /* Header */
-  header{
-    background:linear-gradient(180deg,#0f1520,var(--bg));
-    border-bottom:1px solid var(--card-border);
-    padding:6px 28px;display:flex;align-items:center;
-    justify-content:space-between;position:sticky;top:0;
-    z-index:100;backdrop-filter:blur(12px);
-  }
-  .header-left{display:flex;align-items:center;gap:12px;}
-  .logo{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;line-height:1;}
-  .logo span{color:var(--accent);}
-  .update-info{font-size:10px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;align-self:flex-end;}
+/* Header */
+header{
+background:linear-gradient(180deg,#0f1520,var(--bg));
+border-bottom:1px solid var(--card-border);
+padding:6px 28px;display:flex;align-items:center;
+justify-content:space-between;position:sticky;top:0;
+z-index:100;backdrop-filter:blur(12px);
+}
+.header-left{display:flex;align-items:center;gap:12px;}
+.logo{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;line-height:1;}
+.logo span{color:var(--accent);}
+.update-info{font-size:10px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;align-self:flex-end;}
 
-  /* Clock */
-  .clock-area{display:flex;align-items:baseline;gap:18px;font-family:'JetBrains Mono',monospace;}
-  .clock-zulu{font-size:34px;font-weight:700;color:var(--text);letter-spacing:-1px;}
-  .clock-zulu .z{color:var(--accent);font-size:24px;}
-  .clock-local{font-size:18px;color:var(--text-dim);}
-  .clock-date{font-size:13px;color:var(--text-muted);}
+/* Clock */
+.clock-area{display:flex;align-items:baseline;gap:18px;font-family:'JetBrains Mono',monospace;}
+.clock-zulu{font-size:34px;font-weight:700;color:var(--text);letter-spacing:-1px;}
+.clock-zulu .z{color:var(--accent);font-size:24px;}
+.clock-local{font-size:18px;color:var(--text-dim);}
+.clock-date{font-size:13px;color:var(--text-muted);}
+.header-right{display:flex;align-items:center;gap:10px;}
+button{font-family:'Outfit',sans-serif;cursor:pointer;border:none;outline:none;}
+.btn{padding:5px 12px;border-radius:var(--radius);font-size:12px;font-weight:500;transition:all .2s;}
+.btn-primary{background:var(--accent);color:#0a0e14;}
+.btn-primary:hover{background:#f5d060;}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--text-dim);border:1px solid var(--card-border);}
+.btn-icon{
+width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+border-radius:var(--radius);background:rgba(255,255,255,.05);
+color:var(--text-dim);border:1px solid var(--card-border);font-size:16px;transition:all .2s;
+}
+.btn-icon:hover{background:rgba(255,255,255,.1);color:var(--text);}
 
-  .header-right{display:flex;align-items:center;gap:10px;}
-  button{font-family:'Outfit',sans-serif;cursor:pointer;border:none;outline:none;}
-  .btn{padding:5px 12px;border-radius:var(--radius);font-size:12px;font-weight:500;transition:all .2s;}
-  .btn-primary{background:var(--accent);color:#0a0e14;}
-  .btn-primary:hover{background:#f5d060;}
-  .btn-ghost{background:rgba(255,255,255,.05);color:var(--text-dim);border:1px solid var(--card-border);}
-  .btn-icon{
-    width:32px;height:32px;display:flex;align-items:center;justify-content:center;
-    border-radius:var(--radius);background:rgba(255,255,255,.05);
-    color:var(--text-dim);border:1px solid var(--card-border);font-size:16px;transition:all .2s;
-  }
-  .btn-icon:hover{background:rgba(255,255,255,.1);color:var(--text);}
+/* FSII altitude display (inline in header) */
+.fsii-area{
+display:flex;align-items:center;gap:8px;
+padding:2px 10px;border-radius:6px;
+background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.15);
+}
+.fsii-label{
+font-family:'JetBrains Mono',monospace;
+font-size:9px;font-weight:700;color:var(--mvfr);
+letter-spacing:.4px;white-space:nowrap;
+text-transform:uppercase;writing-mode:vertical-lr;
+transform:rotate(180deg);line-height:1;
+}
+.fsii-readings{display:flex;gap:8px;}
+.fsii-period{
+display:flex;flex-direction:column;align-items:center;
+min-width:72px;
+}
+.fsii-time{
+font-family:'JetBrains Mono',monospace;
+font-size:10px;color:var(--text-dim);font-weight:500;
+white-space:nowrap;line-height:1.1;
+}
+.fsii-alt{
+font-family:'JetBrains Mono',monospace;
+font-size:20px;font-weight:700;color:var(--text);
+letter-spacing:-1px;line-height:1.1;white-space:nowrap;
+}
+.fsii-alt .unit{font-size:11px;color:var(--text-dim);font-weight:500;}
+.fsii-trend{font-size:12px;margin-left:2px;}
+.legend{
+display:flex;gap:16px;padding:4px 28px;
+border-bottom:1px solid var(--card-border);background:rgba(15,21,32,.5);
+}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);}
+.legend-dot{width:10px;height:10px;border-radius:50%;}
 
-  /* FSII altitude display (inline in header) */
-  .fsii-area{
-    display:flex;align-items:center;gap:8px;
-    padding:2px 10px;border-radius:6px;
-    background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.15);
-  }
-  .fsii-label{
-    font-family:'JetBrains Mono',monospace;
-    font-size:9px;font-weight:700;color:var(--mvfr);
-    letter-spacing:.4px;white-space:nowrap;
-    text-transform:uppercase;writing-mode:vertical-lr;
-    transform:rotate(180deg);line-height:1;
-  }
-  .fsii-readings{display:flex;gap:8px;}
-  .fsii-period{
-    display:flex;flex-direction:column;align-items:center;
-    min-width:72px;
-  }
-  .fsii-time{
-    font-family:'JetBrains Mono',monospace;
-    font-size:10px;color:var(--text-dim);font-weight:500;
-    white-space:nowrap;line-height:1.1;
-  }
-  .fsii-alt{
-    font-family:'JetBrains Mono',monospace;
-    font-size:20px;font-weight:700;color:var(--text);
-    letter-spacing:-1px;line-height:1.1;white-space:nowrap;
-  }
-  .fsii-alt .unit{font-size:11px;color:var(--text-dim);font-weight:500;}
-  .fsii-trend{font-size:12px;margin-left:2px;}
+/* Two-column layout */
+main{max-width:1900px;margin:0 auto;padding:4px 28px 10px;}
+.wx-columns{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;}
+.wx-col{display:flex;flex-direction:column;}
 
-  .legend{
-    display:flex;gap:16px;padding:4px 28px;
-    border-bottom:1px solid var(--card-border);background:rgba(15,21,32,.5);
-  }
-  .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);}
-  .legend-dot{width:10px;height:10px;border-radius:50%;}
+/* Column header — age col widened to 90px to fit "OBS 47m/TAF 2h" */
+.col-hdr{
+display:grid;
+grid-template-columns:72px 60px 1fr 60px 60px 62px 60px 90px;
+gap:6px;padding:4px 6px;
+font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;
+color:var(--text-muted);border-bottom:1px solid var(--card-border);
+font-family:'JetBrains Mono',monospace;
+}
+.col-hdr span:nth-child(3){text-align:left;}
+.col-hdr span:nth-child(n+4){text-align:center;}
 
-  /* Two-column layout */
-  main{max-width:1900px;margin:0 auto;padding:4px 28px 10px;}
-  .wx-columns{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;}
-  .wx-col{display:flex;flex-direction:column;}
+/* Station row */
+.station-row{
+border-bottom:1px solid var(--card-border);
+padding:4px 0 2px;transition:background .15s;cursor:default;
+}
+.station-row:hover{background:rgba(255,255,255,.02);}
+.station-row.stale{opacity:.6;}
+.row-data{
+display:grid;
+grid-template-columns:72px 60px 1fr 60px 60px 62px 60px 90px;
+gap:6px;align-items:center;padding:0 6px;
+font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.1;
+}
+.row-id{font-weight:700;font-size:16px;}
+.row-cat{
+font-size:13px;font-weight:700;padding:1px 6px;
+border-radius:4px;letter-spacing:.3px;text-align:center;
+white-space:nowrap;
+}
+.cat-VFR{background:var(--vfr-bg);color:var(--vfr);border:1px solid var(--vfr-border);}
+.cat-MVFR{background:var(--mvfr-bg);color:var(--mvfr);border:1px solid var(--mvfr-border);}
+.cat-IFR{background:var(--ifr-bg);color:var(--ifr);border:1px solid var(--ifr-border);}
+.cat-LIFR{background:var(--lifr-bg);color:var(--lifr);border:1px solid var(--lifr-border);}
+.row-wind{text-align:left;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.wind-calm{color:var(--vfr);}
+.wind-normal{color:var(--text);}
+.wind-caution{color:var(--warn);font-weight:600;}
+.wind-danger{color:var(--danger);font-weight:700;}
+.gust{font-weight:700;}
+.row-cell{text-align:center;font-size:14px;white-space:nowrap;}
+.cat-color-VFR{color:var(--vfr);}
+.cat-color-MVFR{color:var(--mvfr);}
+.cat-color-IFR{color:var(--ifr);font-weight:600;}
+.cat-color-LIFR{color:var(--lifr);font-weight:700;}
+.da-normal{color:var(--text-dim);}
+.da-warm{color:var(--warn);}
+.da-hot{color:var(--danger);font-weight:600;}
+.spread-ok{color:var(--text-dim);}
+.spread-tight{color:var(--warn);font-weight:600;}
+.spread-fog{color:var(--danger);font-weight:700;}
 
-  /* Column header */
-  .col-hdr{
-    display:grid;
-    grid-template-columns:72px 60px 1fr 60px 60px 62px 60px 54px;
-    gap:6px;padding:4px 6px;
-    font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;
-    color:var(--text-muted);border-bottom:1px solid var(--card-border);
-    font-family:'JetBrains Mono',monospace;
-  }
-  .col-hdr span:nth-child(3){text-align:left;}
-  .col-hdr span:nth-child(n+4){text-align:center;}
+/* Combined age cell */
+.age-cell{
+display:flex;flex-direction:column;align-items:center;
+font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.3;
+text-align:center;
+}
+.age-obs{white-space:nowrap;}
+.age-taf{white-space:nowrap;color:var(--text-muted);}
+.age-ok{color:var(--text-muted);}
+.age-stale{color:var(--warn);font-weight:600;}
+.age-old{color:var(--danger);font-weight:700;}
 
-  /* Station row */
-  .station-row{
-    border-bottom:1px solid var(--card-border);
-    padding:4px 0 2px;transition:background .15s;cursor:default;
-  }
-  .station-row:hover{background:rgba(255,255,255,.02);}
-  .station-row.stale{opacity:.6;}
+.row-sub{
+display:flex;align-items:center;gap:8px;
+padding:0 6px 0 78px;
+font-size:11px;color:var(--text-muted);
+font-family:'Outfit',sans-serif;line-height:1.2;
+}
+.row-sub .name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-  .row-data{
-    display:grid;
-    grid-template-columns:72px 60px 1fr 60px 60px 62px 60px 54px;
-    gap:6px;align-items:center;padding:0 6px;
-    font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.1;
-  }
+/* TAF timeline */
+.taf-bar{display:flex;gap:1px;height:8px;margin:2px 6px 0;border-radius:3px;overflow:hidden;}
+.taf-blk{flex:1;position:relative;}
+.taf-blk.VFR{background:var(--vfr);}
+.taf-blk.MVFR{background:var(--mvfr);}
+.taf-blk.IFR{background:var(--ifr);}
+.taf-blk.LIFR{background:var(--lifr);}
+.taf-blk.UNK{background:var(--card-border);}
+.taf-blk:hover{opacity:.7;}
+.taf-blk .tip{
+display:none;position:absolute;bottom:calc(100% + 4px);left:50%;
+transform:translateX(-50%);background:#1a2233;border:1px solid var(--card-border);
+border-radius:4px;padding:5px 10px;font-family:'JetBrains Mono',monospace;
+font-size:13px;color:var(--text);white-space:nowrap;z-index:10;
+pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+.taf-blk:hover .tip{display:block;}
+.taf-labels{display:flex;gap:1px;margin:0 6px 1px;}
+.taf-lbl{flex:1;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-muted);text-align:center;line-height:1.1;}
+.taf-lbl.now{color:var(--accent);font-weight:700;}
+.bar-simple{height:3px;border-radius:2px;opacity:.5;margin:3px 6px 2px;}
+.bar-simple.VFR{background:linear-gradient(90deg,var(--vfr),transparent);}
+.bar-simple.MVFR{background:linear-gradient(90deg,var(--mvfr),transparent);}
+.bar-simple.IFR{background:linear-gradient(90deg,var(--ifr),transparent);}
+.bar-simple.LIFR{background:linear-gradient(90deg,var(--lifr),transparent);}
 
-  .row-id{font-weight:700;font-size:16px;}
-  .row-cat{
-    font-size:13px;font-weight:700;padding:1px 6px;
-    border-radius:4px;letter-spacing:.3px;text-align:center;
-    white-space:nowrap;
-  }
-  .cat-VFR{background:var(--vfr-bg);color:var(--vfr);border:1px solid var(--vfr-border);}
-  .cat-MVFR{background:var(--mvfr-bg);color:var(--mvfr);border:1px solid var(--mvfr-border);}
-  .cat-IFR{background:var(--ifr-bg);color:var(--ifr);border:1px solid var(--ifr-border);}
-  .cat-LIFR{background:var(--lifr-bg);color:var(--lifr);border:1px solid var(--lifr-border);}
+/* Expandable detail */
+.row-detail{display:none;padding:4px 6px 6px 78px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);line-height:1.5;}
 
-  .row-wind{text-align:left;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .wind-calm{color:var(--vfr);}
-  .wind-normal{color:var(--text);}
-  .wind-caution{color:var(--warn);font-weight:600;}
-  .wind-danger{color:var(--danger);font-weight:700;}
-  .gust{font-weight:700;}
+/* PIREP line */
+.pirep-row{
+padding:1px 6px 1px 78px;font-family:'JetBrains Mono',monospace;
+font-size:11px;color:var(--text-dim);line-height:1.2;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.pirep-row.urgent{color:var(--ifr);font-weight:600;}
+.pirep-tag{
+font-size:11px;font-weight:700;padding:2px 6px;border-radius:3px;margin-right:6px;
+background:rgba(255,255,255,.06);color:var(--text-muted);
+}
+.pirep-tag.urgent{background:var(--ifr-bg);color:var(--ifr);}
+.row-detail.show{display:block;}
+.row-detail .raw{word-break:break-all;white-space:pre-wrap;}
+.row-detail .taf-type{color:var(--accent);font-weight:600;}
 
-  .row-cell{text-align:center;font-size:14px;white-space:nowrap;}
-  .cat-color-VFR{color:var(--vfr);}
-  .cat-color-MVFR{color:var(--mvfr);}
-  .cat-color-IFR{color:var(--ifr);font-weight:600;}
-  .cat-color-LIFR{color:var(--lifr);font-weight:700;}
-
-  .da-normal{color:var(--text-dim);}
-  .da-warm{color:var(--warn);}
-  .da-hot{color:var(--danger);font-weight:600;}
-
-  .spread-ok{color:var(--text-dim);}
-  .spread-tight{color:var(--warn);font-weight:600;}
-  .spread-fog{color:var(--danger);font-weight:700;}
-
-  .age-ok{color:var(--text-muted);font-size:12px;}
-  .age-stale{color:var(--warn);font-size:12px;font-weight:600;}
-  .age-old{color:var(--danger);font-size:12px;font-weight:700;}
-
-  .row-sub{
-    display:flex;align-items:center;gap:8px;
-    padding:0 6px 0 78px;
-    font-size:11px;color:var(--text-muted);
-    font-family:'Outfit',sans-serif;line-height:1.2;
-  }
-  .row-sub .name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-
-  /* TAF timeline */
-  .taf-bar{display:flex;gap:1px;height:8px;margin:2px 6px 0;border-radius:3px;overflow:hidden;}
-  .taf-blk{flex:1;position:relative;}
-  .taf-blk.VFR{background:var(--vfr);}
-  .taf-blk.MVFR{background:var(--mvfr);}
-  .taf-blk.IFR{background:var(--ifr);}
-  .taf-blk.LIFR{background:var(--lifr);}
-  .taf-blk.UNK{background:var(--card-border);}
-  .taf-blk:hover{opacity:.7;}
-  .taf-blk .tip{
-    display:none;position:absolute;bottom:calc(100% + 4px);left:50%;
-    transform:translateX(-50%);background:#1a2233;border:1px solid var(--card-border);
-    border-radius:4px;padding:5px 10px;font-family:'JetBrains Mono',monospace;
-    font-size:13px;color:var(--text);white-space:nowrap;z-index:10;
-    pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.4);
-  }
-  .taf-blk:hover .tip{display:block;}
-  .taf-labels{display:flex;gap:1px;margin:0 6px 1px;}
-  .taf-lbl{flex:1;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-muted);text-align:center;line-height:1.1;}
-  .taf-lbl.now{color:var(--accent);font-weight:700;}
-
-  .bar-simple{height:3px;border-radius:2px;opacity:.5;margin:3px 6px 2px;}
-  .bar-simple.VFR{background:linear-gradient(90deg,var(--vfr),transparent);}
-  .bar-simple.MVFR{background:linear-gradient(90deg,var(--mvfr),transparent);}
-  .bar-simple.IFR{background:linear-gradient(90deg,var(--ifr),transparent);}
-  .bar-simple.LIFR{background:linear-gradient(90deg,var(--lifr),transparent);}
-
-  /* Expandable detail */
-  .row-detail{display:none;padding:4px 6px 6px 78px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);line-height:1.5;}
-
-  /* PIREP line */
-  .pirep-row{
-    padding:1px 6px 1px 78px;font-family:'JetBrains Mono',monospace;
-    font-size:11px;color:var(--text-dim);line-height:1.2;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  }
-  .pirep-row.urgent{color:var(--ifr);font-weight:600;}
-  .pirep-tag{
-    font-size:11px;font-weight:700;padding:2px 6px;border-radius:3px;margin-right:6px;
-    background:rgba(255,255,255,.06);color:var(--text-muted);
-  }
-  .pirep-tag.urgent{background:var(--ifr-bg);color:var(--ifr);}
-  .row-detail.show{display:block;}
-  .row-detail .raw{word-break:break-all;white-space:pre-wrap;}
-  .row-detail .taf-type{color:var(--accent);font-weight:600;}
-
-  /* Modal */
-  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;}
-  .modal-overlay.open{display:flex;}
-  .modal{background:var(--card);border:1px solid var(--card-border);border-radius:12px;width:460px;max-width:90vw;max-height:80vh;overflow-y:auto;padding:24px;box-shadow:0 24px 64px rgba(0,0,0,.5);}
-  .modal h2{font-size:16px;font-weight:600;margin-bottom:4px;}
-  .modal p{font-size:12px;color:var(--text-dim);margin-bottom:16px;}
-  .modal label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);display:block;margin-bottom:6px;}
-  .modal textarea{width:100%;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px;padding:10px 14px;resize:vertical;min-height:100px;line-height:1.8;}
-  .modal textarea:focus{outline:none;border-color:var(--accent);}
-  .modal-hint{font-size:10px;color:var(--text-muted);margin-top:4px;margin-bottom:16px;}
-  .modal input[type="number"]{width:60px;background:var(--bg);border:1px solid var(--card-border);border-radius:4px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px;padding:4px 8px;text-align:center;}
-  .modal input[type="number"]:focus{outline:none;border-color:var(--accent);}
-  .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;}
-  .loading{text-align:center;padding:60px 20px;color:var(--text-dim);}
-  .spinner{width:28px;height:28px;border:3px solid var(--card-border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-  @media(max-width:1000px){
-    .wx-columns{grid-template-columns:1fr;}
-    main{padding:8px 12px 30px;}
-    header{padding:8px 12px;}
-    .legend{padding:6px 12px;}
-    .clock-zulu{font-size:22px;}
-  }
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--card-border);border-radius:12px;width:460px;max-width:90vw;max-height:80vh;overflow-y:auto;padding:24px;box-shadow:0 24px 64px rgba(0,0,0,.5);}
+.modal h2{font-size:16px;font-weight:600;margin-bottom:4px;}
+.modal p{font-size:12px;color:var(--text-dim);margin-bottom:16px;}
+.modal label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);display:block;margin-bottom:6px;}
+.modal textarea{width:100%;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px;padding:10px 14px;resize:vertical;min-height:100px;line-height:1.8;}
+.modal textarea:focus{outline:none;border-color:var(--accent);}
+.modal-hint{font-size:10px;color:var(--text-muted);margin-top:4px;margin-bottom:16px;}
+.modal input[type="number"]{width:60px;background:var(--bg);border:1px solid var(--card-border);border-radius:4px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px;padding:4px 8px;text-align:center;}
+.modal input[type="number"]:focus{outline:none;border-color:var(--accent);}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;}
+.loading{text-align:center;padding:60px 20px;color:var(--text-dim);}
+.spinner{width:28px;height:28px;border:3px solid var(--card-border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@media(max-width:1000px){
+.wx-columns{grid-template-columns:1fr;}
+main{padding:8px 12px 30px;}
+header{padding:8px 12px;}
+.legend{padding:6px 12px;}
+.clock-zulu{font-size:22px;}
+}
 </style>
 </head>
 <body>
 <header>
-  <div class="header-left">
-    <div class="logo">METRO <span>WXBoard</span></div>
-    <div class="update-info" id="updateInfo">Loading…</div>
-  </div>
-  <div class="clock-area">
-    <div class="clock-date" id="clockDate"></div>
-    <div class="clock-zulu" id="clockZulu"></div>
-    <div class="clock-local" id="clockLocal"></div>
-  </div>
-  <div class="fsii-area" id="antiiceBar">
-    <div class="fsii-label">FSII REQ ≤5°C</div>
-    <div class="fsii-readings" id="antiiceReadings">
-      <div class="fsii-period"><span class="fsii-time">---</span><span class="fsii-alt">---</span></div>
-      <div class="fsii-period"><span class="fsii-time">---</span><span class="fsii-alt">---</span></div>
-      <div class="fsii-period"><span class="fsii-time">---</span><span class="fsii-alt">---</span></div>
-    </div>
-  </div>
-  <div class="header-right">
-    <button class="btn-icon" onclick="fetchAll()" title="Refresh">↻</button>
-    <button class="btn btn-primary" onclick="openSettings()">✎ Stations</button>
-  </div>
+<div class="header-left">
+<div class="logo">METRO <span>WXBoard</span></div>
+<div class="update-info" id="updateInfo">Loading…</div>
+</div>
+<div class="clock-area">
+<div class="clock-date" id="clockDate"></div>
+<div class="clock-zulu" id="clockZulu"></div>
+<div class="clock-local" id="clockLocal"></div>
+</div>
+<div class="fsii-area" id="antiiceBar">
+<div class="fsii-label">FSII REQ ≤5°C</div>
+<div class="fsii-readings" id="antiiceReadings">
+<div class="fsii-period"><span class="fsii-time">---</span><span class="fsii-alt">---</span></div>
+<div class="fsii-period"><span class="fsii-time">---</span><span class="fsii-alt">---</span></div>
+<div class="fsii-period"><span class="fsii-time">---</span><span class="fsii-alt">---</span></div>
+</div>
+</div>
+<div class="header-right">
+<button class="btn-icon" onclick="fetchAll()" title="Refresh">↻</button>
+<button class="btn btn-primary" onclick="openSettings()">✎ Stations</button>
+</div>
 </header>
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:var(--vfr)"></div>VFR</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--mvfr)"></div>MVFR</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--ifr)"></div>IFR</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--lifr)"></div>LIFR</div>
-  <div class="legend-item" style="margin-left:auto"><div class="legend-dot" style="background:var(--warn)"></div>Wind ≥15kt</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--danger)"></div>Wind ≥20kt</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--vfr)"></div>VFR</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--mvfr)"></div>MVFR</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--ifr)"></div>IFR</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--lifr)"></div>LIFR</div>
+<div class="legend-item" style="margin-left:auto"><div class="legend-dot" style="background:var(--warn)"></div>Wind ≥15kt</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--danger)"></div>Wind ≥20kt</div>
 </div>
 <main><div id="content"><div class="loading"><div class="spinner"></div>Fetching weather…</div></div></main>
 <div class="modal-overlay" id="settingsModal">
-  <div class="modal">
-    <h2>Station List</h2>
-    <p>ICAO identifiers — one per line, comma, or space separated.</p>
-    <label>Airports</label>
-    <textarea id="stationInput" spellcheck="false"></textarea>
-    <div class="modal-hint">Example: KFUL, KLAX, KSNA, KLGB, KBUR</div>
-    <label>Auto-refresh (minutes)</label>
-    <input type="number" id="refreshInput" min="1" max="60" value="1">
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeSettings()">Cancel</button>
-      <button class="btn btn-primary" onclick="saveSettings()">Save &amp; Reload</button>
-    </div>
-  </div>
+<div class="modal">
+<h2>Station List</h2>
+<p>ICAO identifiers — one per line, comma, or space separated.</p>
+<label>Airports</label>
+<textarea id="stationInput" spellcheck="false"></textarea>
+<div class="modal-hint">Example: KFUL, KLAX, KSNA, KLGB, KBUR</div>
+<label>Auto-refresh (minutes)</label>
+<input type="number" id="refreshInput" min="1" max="60" value="1">
+<div class="modal-actions">
+<button class="btn btn-ghost" onclick="closeSettings()">Cancel</button>
+<button class="btn btn-primary" onclick="saveSettings()">Save &amp; Reload</button>
+</div>
+</div>
 </div>
 <script>
 // ═══ Config ═══
 const DEFAULT_STATIONS=[
-  // Column 1 (13 stations)
-  'KFUL', // 0 nm - Fullerton Muni
-  'KSLI', // 5 nm - Los Alamitos AAF
-  'KLGB', // 9 nm - Long Beach/Daugherty
-  'KSNA', // 13 nm - John Wayne/Orange Co
-  'KEMT', // 13 nm - El Monte/San Gabriel
-  'KPOC', // 16 nm - Brackett Field
-  'KHHR', // 18 nm - Hawthorne
-  'KCNO', // 18 nm - Chino
-  'KTOA', // 18 nm - Zamperini/Torrance
-  'KAJO', // 19 nm - Corona Muni
-  'KCCB', // 20 nm - Cable/Upland
-  'KONT', // 22 nm - Ontario Intl
-  'KLAX', // 23 nm - Los Angeles Intl
-  // Column 2 (12 stations)
-  'KSMO', // 25 nm - Santa Monica
-  'KRAL', // 27 nm - Riverside Muni
-  'KBUR', // 28 nm - Bob Hope/Burbank
-  'KWHP', // 32 nm - Whiteman
-  'KVNY', // 33 nm - Van Nuys
-  'KRIV', // 38 nm - March ARB
-  'KSBD', // 40 nm - San Bernardino Intl
-  'KAVX', // 45 nm - Catalina
-  'KWJF', // 55 nm - Gen Fox/Lancaster
-  'KPMD', // 55 nm - Palmdale
-  'KOXR', // 65 nm - Oxnard/Ventura
-  'KCRQ', // 72 nm - McClellan-Palomar
+'KFUL','KSLI','KLGB','KSNA','KEMT','KPOC','KHHR','KCNO','KTOA','KAJO','KCCB','KONT','KLAX',
+'KSMO','KRAL','KBUR','KWHP','KVNY','KRIV','KSBD','KAVX','KWJF','KPMD','KOXR','KCRQ',
 ];
 const AWC_METAR='/awc-api/data/metar';
 const AWC_TAF='/awc-api/data/taf';
 let stations=loadStations();
 let refreshMin=1;try{refreshMin=parseInt(localStorage.getItem('wxboard_refresh')||'1',10);}catch(e){}
 let refreshTimer,metarData={},tafData={},demoMode=false;
+
 function loadStations(){
-  try{
-    const ver=localStorage.getItem('wxboard_ver');
-    if(ver!=='6'){localStorage.removeItem('wxboard_stations');localStorage.setItem('wxboard_ver','6');}
-    const s=localStorage.getItem('wxboard_stations');if(s)return JSON.parse(s);
-  }catch(e){}
-  return[...DEFAULT_STATIONS];
+try{
+const ver=localStorage.getItem('wxboard_ver');
+if(ver!=='6'){localStorage.removeItem('wxboard_stations');localStorage.setItem('wxboard_ver','6');}
+const s=localStorage.getItem('wxboard_stations');if(s)return JSON.parse(s);
+}catch(e){}
+return[...DEFAULT_STATIONS];
 }
 function saveStations(l){try{localStorage.setItem('wxboard_stations',JSON.stringify(l));}catch(e){}stations=l;}
 
 // ═══ Clock ═══
 function tickClock(){
-  const n=new Date();
-  const zh=String(n.getUTCHours()).padStart(2,'0');
-  const zm=String(n.getUTCMinutes()).padStart(2,'0');
-  const zs=String(n.getUTCSeconds()).padStart(2,'0');
-  document.getElementById('clockZulu').innerHTML=zh+':'+zm+':'+zs+'<span class="z">Z</span>';
-  const lh=String(n.getHours()).padStart(2,'0');
-  const lm=String(n.getMinutes()).padStart(2,'0');
-  document.getElementById('clockLocal').textContent=lh+':'+lm+'L';
-  const months=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-  document.getElementById('clockDate').textContent=n.getUTCDate()+' '+months[n.getUTCMonth()]+' '+n.getUTCFullYear();
+const n=new Date();
+const zh=String(n.getUTCHours()).padStart(2,'0');
+const zm=String(n.getUTCMinutes()).padStart(2,'0');
+const zs=String(n.getUTCSeconds()).padStart(2,'0');
+document.getElementById('clockZulu').innerHTML=zh+':'+zm+':'+zs+'<span class="z">Z</span>';
+const lh=String(n.getHours()).padStart(2,'0');
+const lm=String(n.getMinutes()).padStart(2,'0');
+document.getElementById('clockLocal').textContent=lh+':'+lm+'L';
+const months=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+document.getElementById('clockDate').textContent=n.getUTCDate()+' '+months[n.getUTCMonth()]+' '+n.getUTCFullYear();
 }
 setInterval(tickClock,1000);tickClock();
 
 // ═══ Unit helpers ═══
-// AWC API returns altim in mb/hPa. Convert to inHg.
 function altimToInHg(a){
-  if(a===undefined||a===null)return NaN;
-  // If > 100, it's in mb; if < 50, it's already inHg
-  if(a>100) return a*0.02953;
-  return a;
+if(a===undefined||a===null)return NaN;
+if(a>100) return a*0.02953;
+return a;
 }
-// AWC API returns visib as string "10+", "6+", or number
 function parseVisNum(v){
-  if(v===undefined||v===null)return NaN;
-  if(typeof v==='number')return v;
-  const s=String(v).trim();
-  if(s==='10+'||s==='P6SM'||s==='6+')return 10;
-  if(s.startsWith('P'))return 10;
-  const f=s.match(/^(\d+)?\s*(\d+)\/(\d+)/);
-  if(f)return(f[1]?parseInt(f[1]):0)+parseInt(f[2])/parseInt(f[3]);
-  const n=parseFloat(s);
-  return isNaN(n)?NaN:n;
+if(v===undefined||v===null)return NaN;
+if(typeof v==='number')return v;
+const s=String(v).trim();
+if(s==='10+'||s==='P6SM'||s==='6+')return 10;
+if(s.startsWith('P'))return 10;
+const f=s.match(/^(\d+)?\s*(\d+)\/(\d+)/);
+if(f)return(f[1]?parseInt(f[1]):0)+parseInt(f[2])/parseInt(f[3]);
+const n=parseFloat(s);
+return isNaN(n)?NaN:n;
 }
-// AWC API returns times as epoch seconds OR ISO strings
 function parseApiTime(t){
-  if(!t)return null;
-  if(typeof t==='number'){
-    // Epoch seconds if < 1e12, else ms
-    return new Date(t<1e12?t*1000:t);
-  }
-  return new Date(t);
+if(!t)return null;
+if(typeof t==='number'){return new Date(t<1e12?t*1000:t);}
+return new Date(t);
 }
 
 // ═══ Fetch ═══
 async function fetchMetar(){const r=await fetch(AWC_METAR+'?ids='+stations.join(',')+'&format=json&taf=false');if(!r.ok)throw new Error('METAR:'+r.status);const d=await r.json();console.log('[WXBoard] METAR sample:',d[0]);const m={};d.forEach(x=>m[x.icaoId]=x);return m;}
 async function fetchTaf(){const r=await fetch(AWC_TAF+'?ids='+stations.join(',')+'&format=json');if(!r.ok)throw new Error('TAF:'+r.status);const d=await r.json();console.log('[WXBoard] TAF sample:',d[0]);const m={};d.forEach(x=>m[x.icaoId]=x);return m;}
 async function fetchPireps(){
-  // Use first station as center, 200 NM radius covers SoCal basin
-  const center=stations[0]||'KFUL';
-  const r=await fetch('/awc-api/data/pirep?id='+center+'&format=json&distance=200&age=3');
-  if(!r.ok){console.warn('PIREP fetch failed:',r.status);return[];}
-  const d=await r.json();
-  console.log('[WXBoard] PIREPs:',d.length,'reports');
-  return Array.isArray(d)?d:[];
+const center=stations[0]||'KFUL';
+const r=await fetch('/awc-api/data/pirep?id='+center+'&format=json&distance=200&age=3');
+if(!r.ok){console.warn('PIREP fetch failed:',r.status);return[];}
+const d=await r.json();
+console.log('[WXBoard] PIREPs:',d.length,'reports');
+return Array.isArray(d)?d:[];
 }
 function matchPirepsToStations(pireps){
-  // Build lat/lon lookup from METAR data
-  const stnCoords={};
-  stations.forEach(id=>{const m=metarData[id];if(m&&m.lat&&m.lon)stnCoords[id]={lat:m.lat,lon:m.lon};});
-  const matched={};stations.forEach(id=>matched[id]=[]);
-  pireps.forEach(p=>{
-    if(!p.lat||!p.lon)return;
-    // Find nearest station within 30 NM
-    let best=null,bestDist=30;
-    for(const[id,c]of Object.entries(stnCoords)){
-      const d=distNM(p.lat,p.lon,c.lat,c.lon);
-      if(d<bestDist){bestDist=d;best=id;}
-    }
-    if(best){
-      const raw=p.rawOb||p.rawPirep||'';
-      const age=p.obsTime?parseApiTime(p.obsTime):null;
-      matched[best].push({raw,lat:p.lat,lon:p.lon,dist:Math.round(bestDist),age,
-        urgent:p.pirepType==='UUA'||/UUA/.test(raw)});
-    }
-  });
-  return matched;
+const stnCoords={};
+stations.forEach(id=>{const m=metarData[id];if(m&&m.lat&&m.lon)stnCoords[id]={lat:m.lat,lon:m.lon};});
+const matched={};stations.forEach(id=>matched[id]=[]);
+pireps.forEach(p=>{
+if(!p.lat||!p.lon)return;
+let best=null,bestDist=30;
+for(const[id,c]of Object.entries(stnCoords)){
+const d=distNM(p.lat,p.lon,c.lat,c.lon);
+if(d<bestDist){bestDist=d;best=id;}
+}
+if(best){
+const raw=p.rawOb||p.rawPirep||'';
+const age=p.obsTime?parseApiTime(p.obsTime):null;
+matched[best].push({raw,lat:p.lat,lon:p.lon,dist:Math.round(bestDist),age,
+urgent:p.pirepType==='UUA'||/UUA/.test(raw)});
+}
+});
+return matched;
 }
 function distNM(lat1,lon1,lat2,lon2){
-  const R=3440.065;// earth radius in NM
-  const dLat=(lat2-lat1)*Math.PI/180;
-  const dLon=(lon2-lon1)*Math.PI/180;
-  const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
-  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+const R=3440.065;
+const dLat=(lat2-lat1)*Math.PI/180;
+const dLon=(lon2-lon1)*Math.PI/180;
+const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
 }
 let pirepMap={};
 
-// ═══ Winds Aloft — 5°C Altitude (Prist Required) ═══
+// ═══ Winds Aloft ═══
 async function fetchWindsAloft(){
-  const fcsts=[6,12,24];
-  const results=[];
-  for(const f of fcsts){
-    try{
-      const r=await fetch('/awc-api/data/windtemp?region=sfo&level=low&fcst='+f+'&layout=off');
-      if(!r.ok){console.warn('[WXBoard] WindTemp fcst='+f+' status:',r.status);continue;}
-      const txt=await r.text();
-      if(!txt||txt.length<50||txt.includes('<html')){console.warn('[WXBoard] WindTemp fcst='+f+' bad response, length:',txt.length);continue;}
-      console.log('[WXBoard] WindTemp fcst='+f+' received, length:',txt.length);
-      const parsed=parseWindsAloft(txt,f);
-      if(parsed)results.push(parsed);
-    }catch(e){console.warn('[WXBoard] WindTemp fcst='+f+' error:',e);}
-  }
-  updateAntiIceDisplay(results);
+const fcsts=[6,12,24];
+const results=[];
+for(const f of fcsts){
+try{
+const r=await fetch('/awc-api/data/windtemp?region=sfo&level=low&fcst='+f+'&layout=off');
+if(!r.ok){console.warn('[WXBoard] WindTemp fcst='+f+' status:',r.status);continue;}
+const txt=await r.text();
+if(!txt||txt.length<50||txt.includes('<html')){console.warn('[WXBoard] WindTemp fcst='+f+' bad response');continue;}
+const parsed=parseWindsAloft(txt,f);
+if(parsed)results.push(parsed);
+}catch(e){console.warn('[WXBoard] WindTemp fcst='+f+' error:',e);}
+}
+updateAntiIceDisplay(results);
 }
 
 function parseWindsAloft(txt,fcstHr){
-  // Extract valid time: "VALID ddhhmmZ" or "VALID 201800Z"
-  const validMatch=txt.match(/VALID\s+(\d{2})(\d{2})(\d{2})Z/);
-  let validTime='';
-  if(validMatch){
-    const vDay=parseInt(validMatch[1]);
-    const vHr=parseInt(validMatch[2]);
-    // Convert to local for display
-    const now=new Date();
-    const vDate=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),vDay,vHr));
-    const lh=vDate.getHours().toString().padStart(2,'0')+'00L';
-    const zh=validMatch[2]+validMatch[3]+'Z';
-    validTime=lh+' ('+zh+')';
-  }
-
-  // Find ONT line (Ontario — SoCal basin winds aloft reporting station)
-  const lines=txt.split('\n');
-  let stnLine=null;
-  for(const line of lines){
-    if(/^\s*ONT\s/.test(line)){stnLine=line.trim();break;}
-  }
-  if(!stnLine){console.warn('[WXBoard] ONT not found in windtemp fcst='+fcstHr);return null;}
-  console.log('[WXBoard] WindTemp fcst='+fcstHr+':',stnLine);
-
-  // Parse: LAX [3000] [6000] [9000] [12000] [18000] [24000]
-  // 3000 = 4 chars (dir+spd, no temp)
-  // 6000+ = ddss+TT or ddss-TT (4 chars wind + sign + 2 chars temp)
-  // Above 24000: 6 chars ddsstt (temp always negative)
-  const parts=stnLine.split(/\s+/);
-  // parts[0] = 'LAX', parts[1] = 3000, parts[2] = 6000, etc.
-  const levels=[3000,6000,9000,12000,18000,24000];
-  const temps=[];// [{alt, temp}]
-
-  for(let i=1;i<parts.length&&i<=levels.length;i++){
-    const g=parts[i];
-    const alt=levels[i-1];
-    if(i===1){
-      // 3000ft: no temp reported, skip
-      continue;
-    }
-    // Parse temp from group
-    // Format: ddss+TT or ddss-TT
-    const tm=g.match(/\d{4}([+-]\d{2})/);
-    if(tm){
-      temps.push({alt,temp:parseInt(tm[1])});
-    } else if(g.length===6&&alt>=24000){
-      // Above 24000: last 2 digits = temp, always negative
-      const t=-parseInt(g.substring(4,6));
-      temps.push({alt,temp:t});
-    }
-  }
-
-  if(temps.length<2)return null;
-
-  // Interpolate to find altitude where temp = 5°C
-  // Use KONT surface temp as anchor point (ONT is the winds aloft station)
-  const ontMetar=metarData['KONT'];
-  if(ontMetar&&ontMetar.temp!==undefined){
-    temps.unshift({alt:944,temp:ontMetar.temp}); // KONT elev 944ft
-  }
-
-  // Sort by altitude ascending
-  temps.sort((a,b)=>a.alt-b.alt);
-
-  let fiveCAlt=null;
-  for(let i=0;i<temps.length-1;i++){
-    const lo=temps[i],hi=temps[i+1];
-    // Check if 5°C falls between these two levels
-    if((lo.temp>=5&&hi.temp<=5)||(lo.temp<=5&&hi.temp>=5)){
-      // Linear interpolation
-      const frac=(5-lo.temp)/(hi.temp-lo.temp);
-      fiveCAlt=Math.round(lo.alt+frac*(hi.alt-lo.alt));
-      break;
-    }
-  }
-
-  // If surface temp is already ≤5°C
-  if(fiveCAlt===null&&temps.length>0&&temps[0].temp<=5){
-    fiveCAlt=0; // Surface
-  }
-  // If 5°C is above all reported levels (unlikely in SoCal)
-  if(fiveCAlt===null&&temps.length>0&&temps[temps.length-1].temp>5){
-    fiveCAlt=null; // Above max reporting altitude
-  }
-
-  return{fcstHr,validTime,alt:fiveCAlt,temps};
+const validMatch=txt.match(/VALID\s+(\d{2})(\d{2})(\d{2})Z/);
+let validTime='';
+if(validMatch){
+const vDay=parseInt(validMatch[1]);
+const vHr=parseInt(validMatch[2]);
+const now=new Date();
+const vDate=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),vDay,vHr));
+const lh=vDate.getHours().toString().padStart(2,'0')+'00L';
+const zh=validMatch[2]+validMatch[3]+'Z';
+validTime=lh+' ('+zh+')';
+}
+const lines=txt.split('\n');
+let stnLine=null;
+for(const line of lines){if(/^\s*ONT\s/.test(line)){stnLine=line.trim();break;}}
+if(!stnLine){console.warn('[WXBoard] ONT not found in windtemp fcst='+fcstHr);return null;}
+const parts=stnLine.split(/\s+/);
+const levels=[3000,6000,9000,12000,18000,24000];
+const temps=[];
+for(let i=1;i<parts.length&&i<=levels.length;i++){
+const g=parts[i];
+const alt=levels[i-1];
+if(i===1)continue;
+const tm=g.match(/\d{4}([+-]\d{2})/);
+if(tm){temps.push({alt,temp:parseInt(tm[1])});}
+else if(g.length===6&&alt>=24000){temps.push({alt,temp:-parseInt(g.substring(4,6))});}
+}
+if(temps.length<2)return null;
+const ontMetar=metarData['KONT'];
+if(ontMetar&&ontMetar.temp!==undefined)temps.unshift({alt:944,temp:ontMetar.temp});
+temps.sort((a,b)=>a.alt-b.alt);
+let fiveCAlt=null;
+for(let i=0;i<temps.length-1;i++){
+const lo=temps[i],hi=temps[i+1];
+if((lo.temp>=5&&hi.temp<=5)||(lo.temp<=5&&hi.temp>=5)){
+const frac=(5-lo.temp)/(hi.temp-lo.temp);
+fiveCAlt=Math.round(lo.alt+frac*(hi.alt-lo.alt));
+break;
+}
+}
+if(fiveCAlt===null&&temps.length>0&&temps[0].temp<=5)fiveCAlt=0;
+return{fcstHr,validTime,alt:fiveCAlt,temps};
 }
 
 function updateAntiIceDisplay(results){
-  const el=document.getElementById('antiiceReadings');
-  if(!results.length){
-    el.innerHTML='<div class="fsii-period"><span class="fsii-time">No data</span><span class="fsii-alt">---</span></div>';
-    return;
-  }
-
-  let html='';
-  for(let i=0;i<3&&i<results.length;i++){
-    const r=results[i];
-    const altRound=r.alt!==null?Math.round(r.alt/100)*100:null;
-    const altStr=altRound!==null?(altRound>=1000?
-      altRound.toLocaleString()+'<span class="unit"> ft</span>':
-      altRound+' <span class="unit">ft</span>'):'ABV FL240';
-
-    // Color code: green ≥10000, yellow 7000-9999, red <7000
-    let altColor='var(--vfr)'; // green default (high = good)
-    if(altRound!==null){
-      if(altRound<7000)altColor='var(--danger)';
-      else if(altRound<10000)altColor='var(--warn)';
-    }
-
-    // Trend arrow vs previous
-    let trend='';
-    if(i>0&&results[i-1].alt!==null&&r.alt!==null){
-      const diff=r.alt-results[i-1].alt;
-      if(diff<-200)trend='<span class="fsii-trend" style="color:var(--danger)">↓</span>';
-      else if(diff>200)trend='<span class="fsii-trend" style="color:var(--vfr)">↑</span>';
-      else trend='<span class="fsii-trend" style="color:var(--text-muted)">→</span>';
-    }
-
-    html+='<div class="fsii-period">'
-      +'<span class="fsii-time">'+r.validTime+'</span>'
-      +'<span class="fsii-alt" style="color:'+altColor+'">'+altStr+trend+'</span>'
-      +'</div>';
-  }
-  el.innerHTML=html;
+const el=document.getElementById('antiiceReadings');
+if(!results.length){
+el.innerHTML='<div class="fsii-period"><span class="fsii-time">No data</span><span class="fsii-alt">---</span></div>';
+return;
 }
+let html='';
+for(let i=0;i<3&&i<results.length;i++){
+const r=results[i];
+const altRound=r.alt!==null?Math.round(r.alt/100)*100:null;
+const altStr=altRound!==null?(altRound>=1000?altRound.toLocaleString()+'<span class="unit"> ft</span>':altRound+' <span class="unit">ft</span>'):'ABV FL240';
+let altColor='var(--vfr)';
+if(altRound!==null){if(altRound<7000)altColor='var(--danger)';else if(altRound<10000)altColor='var(--warn)';}
+let trend='';
+if(i>0&&results[i-1].alt!==null&&r.alt!==null){
+const diff=r.alt-results[i-1].alt;
+if(diff<-200)trend='<span class="fsii-trend" style="color:var(--danger)">↓</span>';
+else if(diff>200)trend='<span class="fsii-trend" style="color:var(--vfr)">↑</span>';
+else trend='<span class="fsii-trend" style="color:var(--text-muted)">→</span>';
+}
+html+='<div class="fsii-period">'
++'<span class="fsii-time">'+r.validTime+'</span>'
++'<span class="fsii-alt" style="color:'+altColor+'">'+altStr+trend+'</span>'
++'</div>';
+}
+el.innerHTML=html;
+}
+
 async function fetchAll(){
-  try{const[m,t]=await Promise.all([fetchMetar(),fetchTaf()]);metarData=m;tafData=t;demoMode=false;
-    // Fetch PIREPs after METARs (need lat/lon for matching)
-    try{const p=await fetchPireps();pirepMap=matchPirepsToStations(p);}catch(e){console.warn('PIREP error:',e);pirepMap={};}
-    // Fetch winds aloft for anti-ice altitude
-    try{await fetchWindsAloft();}catch(e){console.warn('WindTemp error:',e);}
-    render();
-    document.getElementById('updateInfo').textContent='Updated '+new Date().toLocaleTimeString()+' · '+stations.length+' stn';
-  }catch(e){console.warn('Demo:',e.message);loadDemoData();demoMode=true;pirepMap={};render();
-    document.getElementById('updateInfo').innerHTML='<span style="color:var(--accent)">DEMO</span> — deploy for live data';}
-  if(refreshTimer)clearInterval(refreshTimer);refreshTimer=setInterval(fetchAll,refreshMin*60000);
+try{
+const[m,t]=await Promise.all([fetchMetar(),fetchTaf()]);
+metarData=m;tafData=t;demoMode=false;
+try{const p=await fetchPireps();pirepMap=matchPirepsToStations(p);}catch(e){console.warn('PIREP error:',e);pirepMap={};}
+try{await fetchWindsAloft();}catch(e){console.warn('WindTemp error:',e);}
+render();
+document.getElementById('updateInfo').textContent='Updated '+new Date().toLocaleTimeString()+' · '+stations.length+' stn';
+}catch(e){
+console.warn('Demo:',e.message);loadDemoData();demoMode=true;pirepMap={};render();
+document.getElementById('updateInfo').innerHTML='<span style="color:var(--accent)">DEMO</span> — deploy for live data';
+}
+if(refreshTimer)clearInterval(refreshTimer);refreshTimer=setInterval(fetchAll,refreshMin*60000);
 }
 
 // ═══ Flight Category ═══
@@ -587,286 +499,284 @@ function visCat(v){if(v<1)return'LIFR';if(v<3)return'IFR';if(v<=5)return'MVFR';r
 // ═══ TAF Parsing ═══
 function parseVisib(v){if(v==null)return 10;if(typeof v==='number')return v;const s=String(v).trim();if(s[0]==='P')return 10;const f=s.match(/^(\d+)?\s*(\d+)\/(\d+)/);if(f)return(f[1]?parseInt(f[1]):0)+parseInt(f[2])/parseInt(f[3]);const n=parseFloat(s);return isNaN(n)?10:n;}
 function parseCloudsRaw(s){
-  if(/CAVOK|SKC|CLR/.test(s))return[];
-  const c=[];const re=/(FEW|SCT|BKN|OVC|VV)(\d{3})/g;let m;
-  while((m=re.exec(s))!==null)c.push({cover:m[1]==='VV'?'OVC':m[1],base:parseInt(m[2])*100});
-  return c;
+if(/CAVOK|SKC|CLR/.test(s))return[];
+const c=[];const re=/(FEW|SCT|BKN|OVC|VV)(\d{3})/g;let m;
+while((m=re.exec(s))!==null)c.push({cover:m[1]==='VV'?'OVC':m[1],base:parseInt(m[2])*100});
+return c;
 }
-// Detect military TAF format (uses QNH, meter visibility, no SM)
-function isMilTaf(raw){ return /QNH\d{4}INS/.test(raw); }
-
-function parseVisRaw(s, mil){
-  // CAVOK = ceiling and vis OK (>10km, no sig wx)
-  if(/CAVOK/.test(s))return 10;
-  // Civilian format: SM-based visibility
-  if(/P6SM/.test(s))return 10;
-  const a=s.match(/\b(\d+)\s+(\d+)\/(\d+)SM/);if(a)return parseInt(a[1])+parseInt(a[2])/parseInt(a[3]);
-  const b=s.match(/\b(\d+)\/(\d+)SM/);if(b)return parseInt(b[1])/parseInt(b[2]);
-  const c=s.match(/\b(\d+)SM/);if(c)return parseInt(c[1]);
-  // Military format: visibility in meters right after wind group
-  // Only try this for confirmed military TAFs to avoid matching time groups
-  if(mil){
-    const mVis=s.match(/KT\s+(9999|\d{4})\b/);
-    if(mVis){
-      const m=parseInt(mVis[1]);
-      if(m>=9999)return 10;
-      return m*0.000621371; // meters to SM
-    }
-  }
-  return 10;
-}
-function parseFmTime(t,y,mo){const m=t.match(/FM(\d{2})(\d{2})(\d{2})/);if(!m)return null;let d=new Date(Date.UTC(y,mo,parseInt(m[1]),parseInt(m[2]),parseInt(m[3])));if(d.getUTCDate()!==parseInt(m[1]))d=new Date(Date.UTC(y,mo+1,parseInt(m[1]),parseInt(m[2]),parseInt(m[3])));return d;}
-function buildTLFcsts(taf){
-  const now=new Date(),tl=[],fc=taf.fcsts;if(!fc||!fc.length)return null;
-  const base=fc.filter(f=>!f.fcstChange||f.fcstChange==='FM').sort((a,b)=>parseApiTime(a.timeFrom)-parseApiTime(b.timeFrom));
-  for(let h=0;h<12;h++){const s=new Date(now.getTime()+h*3600000);let a=null;for(const f of base){if(parseApiTime(f.timeFrom)<=s)a=f;else break;}
-    const hz=String(s.getUTCHours()).padStart(2,'0');tl.push({cat:a?fltCat(parseVisNum(a.visib)||10,a.clouds||[]):'UNK',hz,time:s});}return tl;
+function isMilTaf(raw){return /QNH\d{4}INS/.test(raw);}
+function parseVisRaw(s,mil){
+if(/CAVOK/.test(s))return 10;
+if(/P6SM/.test(s))return 10;
+const a=s.match(/\b(\d+)\s+(\d+)\/(\d+)SM/);if(a)return parseInt(a[1])+parseInt(a[2])/parseInt(a[3]);
+const b=s.match(/\b(\d+)\/(\d+)SM/);if(b)return parseInt(b[1])/parseInt(b[2]);
+const c=s.match(/\b(\d+)SM/);if(c)return parseInt(c[1]);
+if(mil){const mVis=s.match(/KT\s+(9999|\d{4})\b/);if(mVis){const m=parseInt(mVis[1]);if(m>=9999)return 10;return m*0.000621371;}}
+return 10;
 }
 function parseBecmgTime(tag,yr,mo){
-  // BECMG ddHH/ddHH — use end time (when new wx is established)
-  const m=tag.match(/BECMG\s+(\d{2})(\d{2})\/(\d{2})(\d{2})/);
-  if(!m)return null;
-  const endDay=parseInt(m[3]),endHr=parseInt(m[4]);
-  let d=new Date(Date.UTC(yr,mo,endDay,endHr));
-  if(d.getUTCDate()!==endDay)d=new Date(Date.UTC(yr,mo+1,endDay,endHr));
-  return d;
+const m=tag.match(/BECMG\s+(\d{2})(\d{2})\/(\d{2})(\d{2})/);
+if(!m)return null;
+const endDay=parseInt(m[3]),endHr=parseInt(m[4]);
+let d=new Date(Date.UTC(yr,mo,endDay,endHr));
+if(d.getUTCDate()!==endDay)d=new Date(Date.UTC(yr,mo+1,endDay,endHr));
+return d;
 }
 function buildTLRaw(taf){
-  if(!taf||!taf.rawTAF)return null;const raw=taf.rawTAF,now=new Date(),yr=now.getUTCFullYear(),mo=now.getUTCMonth();
-  const mil=isMilTaf(raw);
-
-  // Split on FM and BECMG boundaries
-  const parts=raw.split(/\s+(?=FM\d{6}|BECMG\s+\d{4}\/\d{4})/);
-  const segs=[];
-
-  // Parse base valid time
-  const vt=raw.match(/\b(\d{2})(\d{2})\/(\d{2})(\d{2})\b/);
-  let bs=now;
-  if(vt){
-    bs=new Date(Date.UTC(yr,mo,parseInt(vt[1]),parseInt(vt[2])));
-    if(bs.getUTCDate()!==parseInt(vt[1]))bs=new Date(Date.UTC(yr,mo+1,parseInt(vt[1]),parseInt(vt[2])));
-  }
-
-  // Base segment (first part)
-  segs.push({from:bs,vis:parseVisRaw(parts[0],mil),cl:parseCloudsRaw(parts[0])});
-
-  // Subsequent segments
-  for(let i=1;i<parts.length;i++){
-    const seg=parts[i];
-    let ft=null;
-
-    // Try FM first
-    const fmMatch=seg.match(/^FM(\d{2})(\d{2})(\d{2})/);
-    if(fmMatch){
-      ft=new Date(Date.UTC(yr,mo,parseInt(fmMatch[1]),parseInt(fmMatch[2]),parseInt(fmMatch[3])));
-      if(ft.getUTCDate()!==parseInt(fmMatch[1]))ft=new Date(Date.UTC(yr,mo+1,parseInt(fmMatch[1]),parseInt(fmMatch[2]),parseInt(fmMatch[3])));
-    }
-
-    // Try BECMG
-    if(!ft){
-      ft=parseBecmgTime(seg,yr,mo);
-    }
-
-    if(!ft)continue;
-
-    // Handle month rollover
-    if(ft<bs&&(bs-ft)>15*864e5)ft.setUTCMonth(ft.getUTCMonth()+1);
-
-    segs.push({from:ft,vis:parseVisRaw(seg,mil),cl:parseCloudsRaw(seg)});
-  }
-
-  segs.sort((a,b)=>a.from-b.from);
-
-  const tl=[];
-  for(let h=0;h<12;h++){
-    const s=new Date(now.getTime()+h*3600000);
-    let a=segs[0];
-    for(const g of segs){if(g.from<=s)a=g;else break;}
-    tl.push({cat:fltCat(a.vis,a.cl),hz:String(s.getUTCHours()).padStart(2,'0'),time:s});
-  }
-  return tl;
+if(!taf||!taf.rawTAF)return null;const raw=taf.rawTAF,now=new Date(),yr=now.getUTCFullYear(),mo=now.getUTCMonth();
+const mil=isMilTaf(raw);
+const parts=raw.split(/\s+(?=FM\d{6}|BECMG\s+\d{4}\/\d{4})/);
+const segs=[];
+const vt=raw.match(/\b(\d{2})(\d{2})\/(\d{2})(\d{2})\b/);
+let bs=now;
+if(vt){
+bs=new Date(Date.UTC(yr,mo,parseInt(vt[1]),parseInt(vt[2])));
+if(bs.getUTCDate()!==parseInt(vt[1]))bs=new Date(Date.UTC(yr,mo+1,parseInt(vt[1]),parseInt(vt[2])));
+}
+segs.push({from:bs,vis:parseVisRaw(parts[0],mil),cl:parseCloudsRaw(parts[0])});
+for(let i=1;i<parts.length;i++){
+const seg=parts[i];let ft=null;
+const fmMatch=seg.match(/^FM(\d{2})(\d{2})(\d{2})/);
+if(fmMatch){
+ft=new Date(Date.UTC(yr,mo,parseInt(fmMatch[1]),parseInt(fmMatch[2]),parseInt(fmMatch[3])));
+if(ft.getUTCDate()!==parseInt(fmMatch[1]))ft=new Date(Date.UTC(yr,mo+1,parseInt(fmMatch[1]),parseInt(fmMatch[2]),parseInt(fmMatch[3])));
+}
+if(!ft)ft=parseBecmgTime(seg,yr,mo);
+if(!ft)continue;
+if(ft<bs&&(bs-ft)>15*864e5)ft.setUTCMonth(ft.getUTCMonth()+1);
+segs.push({from:ft,vis:parseVisRaw(seg,mil),cl:parseCloudsRaw(seg)});
+}
+segs.sort((a,b)=>a.from-b.from);
+const tl=[];
+for(let h=0;h<12;h++){
+const s=new Date(now.getTime()+h*3600000);
+let a=segs[0];
+for(const g of segs){if(g.from<=s)a=g;else break;}
+tl.push({cat:fltCat(a.vis,a.cl),hz:String(s.getUTCHours()).padStart(2,'0'),time:s});
+}
+return tl;
+}
+function buildTLFcsts(taf){
+const now=new Date(),tl=[],fc=taf.fcsts;if(!fc||!fc.length)return null;
+const base=fc.filter(f=>!f.fcstChange||f.fcstChange==='FM').sort((a,b)=>parseApiTime(a.timeFrom)-parseApiTime(b.timeFrom));
+for(let h=0;h<12;h++){const s=new Date(now.getTime()+h*3600000);let a=null;for(const f of base){if(parseApiTime(f.timeFrom)<=s)a=f;else break;}
+const hz=String(s.getUTCHours()).padStart(2,'0');tl.push({cat:a?fltCat(parseVisNum(a.visib)||10,a.clouds||[]):'UNK',hz,time:s});}return tl;
 }
 function getTL(taf){if(!taf)return null;if(taf.rawTAF)return buildTLRaw(taf);if(taf.fcsts&&taf.fcsts.length)return buildTLFcsts(taf);return null;}
 
 // ═══ Density Altitude ═══
-// Field elevations (ft MSL) for common SoCal airports
 const FIELD_ELEV={
-  'KFUL':96,'KLAX':128,'KSNA':56,'KLGB':60,'KTOA':103,'KBUR':778,
-  'KVNY':802,'KSMO':177,'KONT':944,'KPOC':1011,'KCNO':650,'KEMT':296,
-  'KCPM':97,'KCMA':77,'KOXR':45,'KSBA':10,'KPSP':477,'KSBD':1159,
-  'KCRQ':331,'KSAN':17,'KLAS':2181,'KSFO':13,'KORD':672,'KJFK':13,
-  'KSEA':433,'KRIV':1536,'KSLI':32,'KAVX':1602,'KHHR':66,'KWHP':1003,
-  'KAJO':533,'KRAL':819,'KCCB':1444,'KPMD':2543,'KWJF':2351,'KEDW':2312,
+'KFUL':96,'KLAX':128,'KSNA':56,'KLGB':60,'KTOA':103,'KBUR':778,
+'KVNY':802,'KSMO':177,'KONT':944,'KPOC':1011,'KCNO':650,'KEMT':296,
+'KCPM':97,'KCMA':77,'KOXR':45,'KSBA':10,'KPSP':477,'KSBD':1159,
+'KCRQ':331,'KSAN':17,'KLAS':2181,'KSFO':13,'KORD':672,'KJFK':13,
+'KSEA':433,'KRIV':1536,'KSLI':32,'KAVX':1602,'KHHR':66,'KWHP':1003,
+'KAJO':533,'KRAL':819,'KCCB':1444,'KPMD':2543,'KWJF':2351,'KEDW':2312,
 };
-function calcDA(tempC, altimInHg, fieldElev){
-  // Pressure altitude = (29.92 - altim) * 1000 + field elev
-  const pa = (29.92 - altimInHg) * 1000 + fieldElev;
-  // DA ≈ PA + (120 × (OAT − ISA_temp))  where ISA = 15 − (2 × PA/1000)
-  const isa = 15 - 2 * (pa / 1000);
-  const da = pa + 120 * (tempC - isa);
-  return Math.round(da);
+function calcDA(tempC,altimInHg,fieldElev){
+const pa=(29.92-altimInHg)*1000+fieldElev;
+const isa=15-2*(pa/1000);
+const da=pa+120*(tempC-isa);
+return Math.round(da);
 }
 
 // ═══ Display Helpers ═══
 function fmtWind(m){
-  if(!m||m.wdir===undefined)return{html:'---',cls:'wind-normal'};
-  if(m.wdir===0&&m.wspd===0)return{html:'Calm',cls:'wind-calm'};
-  let dir=(m.wdir==='VRB'||m.wdir===0)?'VRB':String(m.wdir).padStart(3,'0')+'°';
-  const maxW=m.wgst||m.wspd;
-  let cls='wind-normal';
-  if(maxW>=20)cls='wind-danger';
-  else if(maxW>=15)cls='wind-caution';
-  let h=dir+' '+m.wspd;
-  if(m.wgst)h+='<span class="gust">G'+m.wgst+'</span>';
-  h+='kt';
-  return{html:h,cls};
+if(!m||m.wdir===undefined)return{html:'---',cls:'wind-normal'};
+if(m.wdir===0&&m.wspd===0)return{html:'Calm',cls:'wind-calm'};
+let dir=(m.wdir==='VRB'||m.wdir===0)?'VRB':String(m.wdir).padStart(3,'0')+'°';
+const maxW=m.wgst||m.wspd;
+let cls='wind-normal';
+if(maxW>=20)cls='wind-danger';
+else if(maxW>=15)cls='wind-caution';
+let h=dir+' '+m.wspd;
+if(m.wgst)h+='<span class="gust">G'+m.wgst+'</span>';
+h+='kt';
+return{html:h,cls};
 }
 function fmtVis(m){if(!m||m.visib===undefined)return'---';const v=parseVisNum(m.visib);return isNaN(v)?'---':v>=10?'10+':v+'';}
-function fmtCeil(m){
-  if(!m)return'---';
-  const c=getCeil(m.clouds);
-  if(c>=99999)return'CLR';
-  return(c/100).toFixed(0);
-}
+function fmtCeil(m){if(!m)return'---';const c=getCeil(m.clouds);if(c>=99999)return'CLR';return(c/100).toFixed(0);}
 function fmtDA(m,icao){
-  if(!m||m.temp===undefined||m.altim===undefined)return{txt:'---',cls:'da-normal'};
-  const elev=m.elev?(m.elev*3.28084):(FIELD_ELEV[icao]||0); // API elev is meters, convert to ft
-  const inHg=altimToInHg(m.altim);
-  if(isNaN(inHg))return{txt:'---',cls:'da-normal'};
-  const da=calcDA(m.temp,inHg,elev);
-  let cls='da-normal';
-  if(da>3000)cls='da-hot';
-  else if(da>2000)cls='da-warm';
-  return{txt:da>0?'+'+da:da+'',cls};
+if(!m||m.temp===undefined||m.altim===undefined)return{txt:'---',cls:'da-normal'};
+const elev=m.elev?(m.elev*3.28084):(FIELD_ELEV[icao]||0);
+const inHg=altimToInHg(m.altim);
+if(isNaN(inHg))return{txt:'---',cls:'da-normal'};
+const da=calcDA(m.temp,inHg,elev);
+let cls='da-normal';
+if(da>3000)cls='da-hot';
+else if(da>2000)cls='da-warm';
+return{txt:da>0?'+'+da:da+'',cls};
 }
 function fmtSpread(m){
-  if(!m||m.temp===undefined||m.dewp===undefined)return{txt:'---',cls:'spread-ok'};
-  const sp=Math.round(m.temp-m.dewp);
-  let cls='spread-ok';
-  if(sp<=2)cls='spread-fog';
-  else if(sp<=5)cls='spread-tight';
-  return{txt:sp+'°',cls};
+if(!m||m.temp===undefined||m.dewp===undefined)return{txt:'---',cls:'spread-ok'};
+const sp=Math.round(m.temp-m.dewp);
+let cls='spread-ok';
+if(sp<=2)cls='spread-fog';
+else if(sp<=5)cls='spread-tight';
+return{txt:sp+'°',cls};
 }
-function obsAge(m){
-  if(!m||!m.reportTime)return{txt:'---',cls:'age-ok'};
-  const obs=parseApiTime(m.reportTime);
-  const d=Math.round((new Date()-obs)/60000);
-  let cls='age-ok',txt;
-  if(d<1)txt='<1m';
-  else if(d<60)txt=d+'m';
-  else txt=Math.floor(d/60)+'h'+d%60+'m';
-  if(d>60)cls='age-old';
-  else if(d>30)cls='age-stale';
-  return{txt,cls,stale:d>60};
+
+// ═══ Age helpers ═══
+function ageStr(minutes){
+if(minutes<1)return'<1m';
+if(minutes<60)return minutes+'m';
+const h=Math.floor(minutes/60),m=minutes%60;
+return m>0?h+'h'+m+'m':h+'h';
+}
+
+// Returns METAR obs age in minutes (or null)
+function obsAgeMin(m){
+if(!m||!m.reportTime)return null;
+const obs=parseApiTime(m.reportTime);
+if(!obs)return null;
+return Math.round((new Date()-obs)/60000);
+}
+
+// Returns TAF issued age in minutes (or null)
+// TAF issueTime field is epoch seconds or ISO string
+function tafAgeMin(t){
+if(!t)return null;
+// Try issueTime first, fall back to bulletinTime
+const raw=t.issueTime||t.bulletinTime||null;
+if(!raw)return null;
+const d=parseApiTime(raw);
+if(!d)return null;
+return Math.round((new Date()-d)/60000);
+}
+
+// Build combined age cell HTML
+function fmtAge(m,t){
+const obsMin=obsAgeMin(m);
+const tafMin=tafAgeMin(t);
+
+// Determine METAR age class
+let obsCls='age-ok';
+if(obsMin===null)obsCls='age-ok';
+else if(obsMin>60)obsCls='age-old';
+else if(obsMin>30)obsCls='age-stale';
+
+// Determine TAF age class (TAFs are issued every 6h so tolerate more)
+let tafCls='age-taf';
+if(tafMin!==null&&tafMin>360)tafCls='age-taf age-old';
+else if(tafMin!==null&&tafMin>180)tafCls='age-taf age-stale';
+
+const obsLabel=obsMin!==null?'OBS '+ageStr(obsMin):'OBS ---';
+const tafLabel=tafMin!==null?'TAF '+ageStr(tafMin):'';
+
+const stale=obsMin!==null&&obsMin>60;
+
+return{
+html:'<div class="age-cell"><span class="age-obs '+obsCls+'">'+obsLabel+'</span>'+(tafLabel?'<span class="'+tafCls+'">'+tafLabel+'</span>':'')+'</div>',
+stale
+};
 }
 
 const AN={
-  'KFUL':'Fullerton Muni','KSLI':'Los Alamitos AAF','KLGB':'Long Beach/Daugherty',
-  'KSNA':'John Wayne/Orange Co','KEMT':'El Monte/San Gabriel',
-  'KPOC':'Brackett Field','KHHR':'Hawthorne Muni','KCNO':'Chino',
-  'KTOA':'Zamperini/Torrance','KAJO':'Corona Muni','KONT':'Ontario Intl',
-  'KLAX':'Los Angeles Intl','KSMO':'Santa Monica Muni','KRAL':'Riverside Muni',
-  'KBUR':'Bob Hope/Burbank','KWHP':'Whiteman','KVNY':'Van Nuys',
-  'KRIV':'March ARB','KSBD':'San Bernardino Intl',
-  'KCMA':'Camarillo','KOXR':'Oxnard/Ventura','KSBA':'Santa Barbara Muni',
-  'KPSP':'Palm Springs Intl','KCRQ':'McClellan-Palomar','KSAN':'San Diego Intl',
-  'KLAS':'Las Vegas/Harry Reid','KSFO':'San Francisco Intl',
-  'KORD':"Chicago O'Hare",'KJFK':'JFK Intl','KSEA':'Seattle-Tacoma',
-  'KCCB':'Cable/Upland','KPMD':'Palmdale','KWJF':'Gen Fox/Lancaster',
-  'KEDW':'Edwards AFB','KAVX':'Catalina',
+'KFUL':'Fullerton Muni','KSLI':'Los Alamitos AAF','KLGB':'Long Beach/Daugherty',
+'KSNA':'John Wayne/Orange Co','KEMT':'El Monte/San Gabriel',
+'KPOC':'Brackett Field','KHHR':'Hawthorne Muni','KCNO':'Chino',
+'KTOA':'Zamperini/Torrance','KAJO':'Corona Muni','KONT':'Ontario Intl',
+'KLAX':'Los Angeles Intl','KSMO':'Santa Monica Muni','KRAL':'Riverside Muni',
+'KBUR':'Bob Hope/Burbank','KWHP':'Whiteman','KVNY':'Van Nuys',
+'KRIV':'March ARB','KSBD':'San Bernardino Intl',
+'KCMA':'Camarillo','KOXR':'Oxnard/Ventura','KSBA':'Santa Barbara Muni',
+'KPSP':'Palm Springs Intl','KCRQ':'McClellan-Palomar','KSAN':'San Diego Intl',
+'KLAS':'Las Vegas/Harry Reid','KSFO':'San Francisco Intl',
+'KORD':"Chicago O'Hare",'KJFK':'JFK Intl','KSEA':'Seattle-Tacoma',
+'KCCB':'Cable/Upland','KPMD':'Palmdale','KWJF':'Gen Fox/Lancaster',
+'KEDW':'Edwards AFB','KAVX':'Catalina',
 };
 
 // ═══ Render ═══
 function renderBar(taf){
-  const tl=getTL(taf);if(!tl)return'';
-  let b='',l='';
-  tl.forEach((s,i)=>{
-    const lh=s.time.getHours().toString().padStart(2,'0');
-    const tip=s.hz+'Z ('+lh+'L) '+s.cat;
-    b+='<div class="taf-blk '+s.cat+'"><span class="tip">'+tip+'</span></div>';
-    l+='<div class="taf-lbl'+(i===0?' now':'')+'">'+lh+'</div>';
-  });
-  return'<div class="taf-bar">'+b+'</div><div class="taf-labels">'+l+'</div>';
+const tl=getTL(taf);if(!tl)return'';
+let b='',l='';
+tl.forEach((s,i)=>{
+const lh=s.time.getHours().toString().padStart(2,'0');
+const tip=s.hz+'Z ('+lh+'L) '+s.cat;
+b+='<div class="taf-blk '+s.cat+'"><span class="tip">'+tip+'</span></div>';
+l+='<div class="taf-lbl'+(i===0?' now':'')+'">'+lh+'</div>';
+});
+return'<div class="taf-bar">'+b+'</div><div class="taf-labels">'+l+'</div>';
 }
 
 function render(){
-  const el=document.getElementById('content');
-  let html='';
-  if(demoMode) html+='<div style="background:rgba(240,192,64,.08);border:1px solid rgba(240,192,64,.25);border-radius:6px;padding:8px 16px;margin-bottom:8px;font-size:12px;color:var(--accent);font-family:JetBrains Mono,monospace">⚠ DEMO — deploy to Netlify for live data</div>';
-  const mid=Math.ceil(stations.length/2);
-  html+='<div class="wx-columns"><div class="wx-col">'+colHdr()+renderCol(stations.slice(0,mid))+'</div><div class="wx-col">'+colHdr()+renderCol(stations.slice(mid))+'</div></div>';
-  el.innerHTML=html;
+const el=document.getElementById('content');
+let html='';
+if(demoMode) html+='<div style="background:rgba(240,192,64,.08);border:1px solid rgba(240,192,64,.25);border-radius:6px;padding:8px 16px;margin-bottom:8px;font-size:12px;color:var(--accent);font-family:JetBrains Mono,monospace">⚠ DEMO — deploy to Cloudflare for live data</div>';
+const mid=Math.ceil(stations.length/2);
+html+='<div class="wx-columns"><div class="wx-col">'+colHdr()+renderCol(stations.slice(0,mid))+'</div><div class="wx-col">'+colHdr()+renderCol(stations.slice(mid))+'</div></div>';
+el.innerHTML=html;
 }
 
 function colHdr(){
-  return'<div class="col-hdr"><span>ID</span><span>Cat</span><span>Wind</span><span>Ceil</span><span>Vis</span><span>DA</span><span>T/Dp</span><span>Age</span></div>';
+return'<div class="col-hdr"><span>ID</span><span>Cat</span><span>Wind</span><span>Ceil</span><span>Vis</span><span>DA</span><span>T/Dp</span><span>Age</span></div>';
 }
 
 function renderCol(list){
-  let h='';
-  list.forEach(icao=>{
-    const m=metarData[icao],t=tafData[icao];
-    const cat=m?(m.fltcat||m.fltCat||'VFR'):'UNK';
-    const w=fmtWind(m);
-    const ceil=m?getCeil(m.clouds):99999;
-    const ceilStr=fmtCeil(m);
-    const ceilColor=ceilCat(ceil);
-    const vis=m?parseVisNum(m.visib):NaN;
-    const visStr=fmtVis(m);
-    const visColor=visCat(isNaN(vis)?10:vis);
-    const da=fmtDA(m,icao);
-    const sp=fmtSpread(m);
-    const age=obsAge(m);
-    const bar=t?renderBar(t):'<div class="bar-simple '+cat+'"></div>';
-    const detId='det-'+icao;
+let h='';
+list.forEach(icao=>{
+const m=metarData[icao],t=tafData[icao];
+const cat=m?(m.fltcat||m.fltCat||'VFR'):'UNK';
+const w=fmtWind(m);
+const ceil=m?getCeil(m.clouds):99999;
+const ceilStr=fmtCeil(m);
+const ceilColor=ceilCat(ceil);
+const vis=m?parseVisNum(m.visib):NaN;
+const visStr=fmtVis(m);
+const visColor=visCat(isNaN(vis)?10:vis);
+const da=fmtDA(m,icao);
+const sp=fmtSpread(m);
+const age=fmtAge(m,t);
+const bar=t?renderBar(t):'<div class="bar-simple '+cat+'"></div>';
+const detId='det-'+icao;
 
-    h+='<div class="station-row'+(age.stale?' stale':'')+'" onclick="toggleDetail(\''+detId+'\')">';
-    h+='<div class="row-data">';
-    h+='<span class="row-id">'+icao+'</span>';
-    h+='<span class="row-cat cat-'+cat+'">'+cat+'</span>';
-    h+='<span class="row-wind '+w.cls+'">'+w.html+'</span>';
-    h+='<span class="row-cell cat-color-'+ceilColor+'">'+(ceilStr==='CLR'?'CLR':ceilStr)+'</span>';
-    h+='<span class="row-cell cat-color-'+visColor+'">'+visStr+'</span>';
-    h+='<span class="row-cell '+da.cls+'">'+da.txt+'</span>';
-    h+='<span class="row-cell '+sp.cls+'">'+sp.txt+'</span>';
-    h+='<span class="'+age.cls+'">'+age.txt+'</span>';
-    h+='</div>';
-    // Sub line: airport name
-    const name=AN[icao]||'';
-    if(name)h+='<div class="row-sub"><span class="name">'+name+'</span></div>';
-    h+=bar;
-    // PIREP line
-    const pireps=pirepMap[icao]||[];
-    if(pireps.length>0){
-      const p=pireps[0]; // Show most recent
-      const tag=p.urgent?'<span class="pirep-tag urgent">UUA</span>':'<span class="pirep-tag">PIREP</span>';
-      // Trim raw to essentials: remove header boilerplate
-      const raw=p.raw.replace(/^(UA|UUA)\s*/,'').substring(0,120);
-      h+='<div class="pirep-row'+(p.urgent?' urgent':'')+'">'+tag+raw+(pireps.length>1?' <span style="color:var(--text-muted)">(+'+( pireps.length-1)+' more)</span>':'')+'</div>';
-    }
-    // Expandable detail
-    h+='<div class="row-detail" id="'+detId+'">';
-    if(m)h+='<div class="raw">'+(m.rawOb||'---')+'</div>';
-    if(t&&t.rawTAF){
-      const lines=t.rawTAF.split(/\s(?=(?:FM|TEMPO|BECMG|PROB\d{2}))/g);
-      h+='<div style="margin-top:4px;border-top:1px solid var(--card-border);padding-top:4px">';
-      lines.forEach(l=>{h+='<div>'+l.replace(/^(FM\d{6})/,'<span class="taf-type">$1</span>').replace(/^(TEMPO)/,'<span class="taf-type">$1</span>').replace(/^(BECMG)/,'<span class="taf-type">$1</span>').replace(/^(PROB\d{2})/,'<span class="taf-type">$1</span>')+'</div>';});
-      h+='</div>';
-    }
-    if(pireps.length>0){
-      h+='<div style="margin-top:4px;border-top:1px solid var(--card-border);padding-top:4px;color:var(--text-dim)">';
-      h+='<div style="font-size:9px;color:var(--text-muted);font-weight:600;margin-bottom:2px">PIREPS ('+pireps.length+') within 30 NM</div>';
-      pireps.forEach(p=>{
-        h+='<div style="font-size:10px;margin-bottom:2px;'+(p.urgent?'color:var(--ifr);font-weight:600':'')+'">'
-          +(p.urgent?'⚠ ':'')+p.raw.substring(0,200)
-          +(p.dist?' <span style="color:var(--text-muted)">['+p.dist+'NM]</span>':'')
-          +'</div>';
-      });
-      h+='</div>';
-    }
-    h+='</div></div>';
-  });
-  return h;
+h+='<div class="station-row'+(age.stale?' stale':'')+'" onclick="toggleDetail(\''+detId+'\')">';
+h+='<div class="row-data">';
+h+='<span class="row-id">'+icao+'</span>';
+h+='<span class="row-cat cat-'+cat+'">'+cat+'</span>';
+h+='<span class="row-wind '+w.cls+'">'+w.html+'</span>';
+h+='<span class="row-cell cat-color-'+ceilColor+'">'+(ceilStr==='CLR'?'CLR':ceilStr)+'</span>';
+h+='<span class="row-cell cat-color-'+visColor+'">'+visStr+'</span>';
+h+='<span class="row-cell '+da.cls+'">'+da.txt+'</span>';
+h+='<span class="row-cell '+sp.cls+'">'+sp.txt+'</span>';
+h+=age.html;
+h+='</div>';
+
+const name=AN[icao]||'';
+if(name)h+='<div class="row-sub"><span class="name">'+name+'</span></div>';
+h+=bar;
+
+const pireps=pirepMap[icao]||[];
+if(pireps.length>0){
+const p=pireps[0];
+const tag=p.urgent?'<span class="pirep-tag urgent">UUA</span>':'<span class="pirep-tag">PIREP</span>';
+const raw=p.raw.replace(/^(UA|UUA)\s*/,'').substring(0,120);
+h+='<div class="pirep-row'+(p.urgent?' urgent':'')+'">'+tag+raw+(pireps.length>1?' <span style="color:var(--text-muted)">(+'+(pireps.length-1)+' more)</span>':'')+'</div>';
+}
+
+h+='<div class="row-detail" id="'+detId+'">';
+if(m)h+='<div class="raw">'+(m.rawOb||'---')+'</div>';
+if(t&&t.rawTAF){
+const lines=t.rawTAF.split(/\s(?=(?:FM|TEMPO|BECMG|PROB\d{2}))/g);
+h+='<div style="margin-top:4px;border-top:1px solid var(--card-border);padding-top:4px">';
+lines.forEach(l=>{h+='<div>'+l.replace(/^(FM\d{6})/,'<span class="taf-type">$1</span>').replace(/^(TEMPO)/,'<span class="taf-type">$1</span>').replace(/^(BECMG)/,'<span class="taf-type">$1</span>').replace(/^(PROB\d{2})/,'<span class="taf-type">$1</span>')+'</div>';});
+h+='</div>';
+}
+if(pireps.length>0){
+h+='<div style="margin-top:4px;border-top:1px solid var(--card-border);padding-top:4px;color:var(--text-dim)">';
+h+='<div style="font-size:9px;color:var(--text-muted);font-weight:600;margin-bottom:2px">PIREPS ('+pireps.length+') within 30 NM</div>';
+pireps.forEach(p=>{
+h+='<div style="font-size:10px;margin-bottom:2px;'+(p.urgent?'color:var(--ifr);font-weight:600':'')+'">'
++(p.urgent?'⚠ ':'')+p.raw.substring(0,200)
++(p.dist?' <span style="color:var(--text-muted)">['+p.dist+'NM]</span>':'')
++'</div>';
+});
+h+='</div>';
+}
+h+='</div></div>';
+});
+return h;
 }
 
 function toggleDetail(id){const el=document.getElementById(id);if(el)el.classList.toggle('show');}
@@ -875,43 +785,43 @@ function toggleDetail(id){const el=document.getElementById(id);if(el)el.classLis
 function openSettings(){document.getElementById('stationInput').value=stations.join('\n');document.getElementById('refreshInput').value=refreshMin;document.getElementById('settingsModal').classList.add('open');}
 function closeSettings(){document.getElementById('settingsModal').classList.remove('open');}
 function saveSettings(){
-  const p=document.getElementById('stationInput').value.toUpperCase().split(/[\s,;]+/).map(s=>s.trim()).filter(s=>/^[A-Z]{3,4}$/.test(s)).map(s=>s.length===3?'K'+s:s);
-  if(!p.length){alert('Enter at least one ICAO ID.');return;}
-  saveStations([...new Set(p)]);
-  const n=parseInt(document.getElementById('refreshInput').value,10);
-  if(n>=1&&n<=60){refreshMin=n;try{localStorage.setItem('wxboard_refresh',String(n));}catch(e){}}
-  closeSettings();document.getElementById('content').innerHTML='<div class="loading"><div class="spinner"></div>Loading…</div>';fetchAll();
+const p=document.getElementById('stationInput').value.toUpperCase().split(/[\s,;]+/).map(s=>s.trim()).filter(s=>/^[A-Z]{3,4}$/.test(s)).map(s=>s.length===3?'K'+s:s);
+if(!p.length){alert('Enter at least one ICAO ID.');return;}
+saveStations([...new Set(p)]);
+const n=parseInt(document.getElementById('refreshInput').value,10);
+if(n>=1&&n<=60){refreshMin=n;try{localStorage.setItem('wxboard_refresh',String(n));}catch(e){}}
+closeSettings();document.getElementById('content').innerHTML='<div class="loading"><div class="spinner"></div>Loading…</div>';fetchAll();
 }
 document.getElementById('settingsModal').addEventListener('click',function(e){if(e.target===this)closeSettings();});
 
 // ═══ Demo Data ═══
 function loadDemoData(){
-  const now=new Date().toISOString();
-  const S=[
-    {icaoId:'KFUL',fltcat:'VFR',wdir:'VRB',wspd:3,wgst:null,visib:10,temp:21,dewp:14,altim:29.97,clouds:[{cover:'SCT',base:2500},{cover:'OVC',base:3200}],rawOb:'KFUL 311750Z VRB03KT 10SM SCT025 OVC032 21/14 A2997',reportTime:now},
-    {icaoId:'KLAX',fltcat:'VFR',wdir:120,wspd:9,wgst:18,visib:10,temp:20,dewp:13,altim:29.98,clouds:[{cover:'SCT',base:2500},{cover:'OVC',base:14000}],rawOb:'KLAX 311753Z 12009G18KT 10SM SCT025 OVC140 20/13 A2998',reportTime:now},
-    {icaoId:'KSNA',fltcat:'VFR',wdir:200,wspd:15,wgst:22,visib:10,temp:21,dewp:15,altim:29.99,clouds:[{cover:'SCT',base:2600},{cover:'BKN',base:3400}],rawOb:'KSNA 311753Z 20015G22KT 10SM SCT026 BKN034 21/15 A2999',reportTime:now},
-    {icaoId:'KLGB',fltcat:'VFR',wdir:140,wspd:4,wgst:null,visib:10,temp:19,dewp:14,altim:29.97,clouds:[{cover:'BKN',base:3100}],rawOb:'KLGB 311753Z 14004KT 10SM BKN031 19/14 A2997',reportTime:now},
-    {icaoId:'KTOA',fltcat:'VFR',wdir:110,wspd:7,wgst:null,visib:10,temp:20,dewp:14,altim:29.98,clouds:[{cover:'SCT',base:2000},{cover:'BKN',base:3400},{cover:'OVC',base:18000}],rawOb:'KTOA 311747Z 11007KT 10SM SCT020 BKN034 OVC180 20/14 A2998',reportTime:now},
-    {icaoId:'KBUR',fltcat:'VFR',wdir:170,wspd:17,wgst:25,visib:10,temp:19,dewp:12,altim:29.97,clouds:[{cover:'FEW',base:2100}],rawOb:'KBUR 311753Z 17017G25KT 10SM FEW021 19/12 A2997',reportTime:now},
-    {icaoId:'KVNY',fltcat:'MVFR',wdir:150,wspd:5,wgst:null,visib:4,temp:19,dewp:14,altim:29.96,clouds:[{cover:'BKN',base:1800},{cover:'OVC',base:2500}],rawOb:'KVNY 311753Z 15005KT 4SM HZ BKN018 OVC025 19/14 A2996',reportTime:now},
-    {icaoId:'KSMO',fltcat:'MVFR',wdir:130,wspd:6,wgst:null,visib:10,temp:19,dewp:17,altim:29.97,clouds:[{cover:'BKN',base:1500},{cover:'OVC',base:2500}],rawOb:'KSMO 311751Z 13006KT 10SM BKN015 OVC025 19/17 A2997',reportTime:now},
-    {icaoId:'KONT',fltcat:'VFR',wdir:250,wspd:8,wgst:null,visib:10,temp:28,dewp:11,altim:29.98,clouds:[{cover:'SCT',base:4000}],rawOb:'KONT 311753Z 25008KT 10SM SCT040 28/11 A2998',reportTime:now},
-    {icaoId:'KPOC',fltcat:'VFR',wdir:210,wspd:5,wgst:null,visib:10,temp:26,dewp:12,altim:29.98,clouds:[{cover:'SCT',base:3500}],rawOb:'KPOC 311755Z 21005KT 10SM SCT035 26/12 A2998',reportTime:now},
-    {icaoId:'KCNO',fltcat:'VFR',wdir:230,wspd:6,wgst:null,visib:10,temp:24,dewp:11,altim:29.97,clouds:[{cover:'FEW',base:3800}],rawOb:'KCNO 311747Z 23006KT 10SM FEW038 24/11 A2997',reportTime:now},
-    {icaoId:'KEMT',fltcat:'VFR',wdir:190,wspd:4,wgst:null,visib:10,temp:21,dewp:13,altim:29.98,clouds:[{cover:'SCT',base:3200}],rawOb:'KEMT 311747Z 19004KT 10SM SCT032 21/13 A2998',reportTime:now},
-  ];
-  const T=[
-    {icaoId:'KLAX',rawTAF:'TAF KLAX 311730Z 3118/0124 12010G18KT P6SM SCT025 OVC140 FM312200 24008KT P6SM SCT040 FM010400 VRB03KT 3SM BR BKN008 FM011500 18008KT P6SM SCT025'},
-    {icaoId:'KSNA',rawTAF:'TAF KSNA 311730Z 3118/0118 20015G22KT P6SM SCT026 BKN035 FM312200 26006KT P6SM FEW030 FM010500 VRB03KT 2SM BR OVC006 FM011400 20008KT P6SM SCT020'},
-    {icaoId:'KBUR',rawTAF:'TAF KBUR 311730Z 3118/0118 17017G25KT P6SM FEW021 FM312100 25005KT P6SM SKC FM010400 VRB03KT 4SM BR HZ FEW008 FM011500 18006KT P6SM FEW025'},
-    {icaoId:'KONT',rawTAF:'TAF KONT 311730Z 3118/0118 25008KT P6SM SCT040 FM312300 VRB05KT P6SM SKC FM010600 VRB03KT 5SM HZ SCT015 FM011400 24008KT P6SM FEW035'},
-    {icaoId:'KVNY',rawTAF:'TAF KVNY 311730Z 3118/0118 15005KT 4SM HZ BKN018 OVC025 FM312100 28006KT P6SM SCT035 FM010300 VRB03KT 2SM BR OVC005 FM011400 20006KT P6SM SCT020'},
-    {icaoId:'KSMO',rawTAF:'TAF KSMO 311730Z 3118/0118 13006KT P6SM BKN015 OVC025 FM312100 24005KT P6SM FEW040 FM010300 VRB03KT 3SM BR BKN010 FM011500 22006KT P6SM SCT025'},
-    {icaoId:'KLGB',rawTAF:'TAF KLGB 311730Z 3118/0118 14004KT P6SM BKN031 FM312200 23005KT P6SM SCT035 FM010400 VRB03KT 3SM BR BKN009 FM011400 19007KT P6SM SCT025'},
-  ];
-  metarData={};S.forEach(s=>{if(stations.includes(s.icaoId))metarData[s.icaoId]=s;});
-  tafData={};T.forEach(t=>{if(stations.includes(t.icaoId))tafData[t.icaoId]=t;});
+const now=new Date().toISOString();
+const S=[
+{icaoId:'KFUL',fltcat:'VFR',wdir:'VRB',wspd:3,wgst:null,visib:10,temp:21,dewp:14,altim:29.97,clouds:[{cover:'SCT',base:2500},{cover:'OVC',base:3200}],rawOb:'KFUL 311750Z VRB03KT 10SM SCT025 OVC032 21/14 A2997',reportTime:now},
+{icaoId:'KLAX',fltcat:'VFR',wdir:120,wspd:9,wgst:18,visib:10,temp:20,dewp:13,altim:29.98,clouds:[{cover:'SCT',base:2500},{cover:'OVC',base:14000}],rawOb:'KLAX 311753Z 12009G18KT 10SM SCT025 OVC140 20/13 A2998',reportTime:now},
+{icaoId:'KSNA',fltcat:'VFR',wdir:200,wspd:15,wgst:22,visib:10,temp:21,dewp:15,altim:29.99,clouds:[{cover:'SCT',base:2600},{cover:'BKN',base:3400}],rawOb:'KSNA 311753Z 20015G22KT 10SM SCT026 BKN034 21/15 A2999',reportTime:now},
+{icaoId:'KLGB',fltcat:'VFR',wdir:140,wspd:4,wgst:null,visib:10,temp:19,dewp:14,altim:29.97,clouds:[{cover:'BKN',base:3100}],rawOb:'KLGB 311753Z 14004KT 10SM BKN031 19/14 A2997',reportTime:now},
+{icaoId:'KTOA',fltcat:'VFR',wdir:110,wspd:7,wgst:null,visib:10,temp:20,dewp:14,altim:29.98,clouds:[{cover:'SCT',base:2000},{cover:'BKN',base:3400},{cover:'OVC',base:18000}],rawOb:'KTOA 311747Z 11007KT 10SM SCT020 BKN034 OVC180 20/14 A2998',reportTime:now},
+{icaoId:'KBUR',fltcat:'VFR',wdir:170,wspd:17,wgst:25,visib:10,temp:19,dewp:12,altim:29.97,clouds:[{cover:'FEW',base:2100}],rawOb:'KBUR 311753Z 17017G25KT 10SM FEW021 19/12 A2997',reportTime:now},
+{icaoId:'KVNY',fltcat:'MVFR',wdir:150,wspd:5,wgst:null,visib:4,temp:19,dewp:14,altim:29.96,clouds:[{cover:'BKN',base:1800},{cover:'OVC',base:2500}],rawOb:'KVNY 311753Z 15005KT 4SM HZ BKN018 OVC025 19/14 A2996',reportTime:now},
+{icaoId:'KSMO',fltcat:'MVFR',wdir:130,wspd:6,wgst:null,visib:10,temp:19,dewp:17,altim:29.97,clouds:[{cover:'BKN',base:1500},{cover:'OVC',base:2500}],rawOb:'KSMO 311751Z 13006KT 10SM BKN015 OVC025 19/17 A2997',reportTime:now},
+{icaoId:'KONT',fltcat:'VFR',wdir:250,wspd:8,wgst:null,visib:10,temp:28,dewp:11,altim:29.98,clouds:[{cover:'SCT',base:4000}],rawOb:'KONT 311753Z 25008KT 10SM SCT040 28/11 A2998',reportTime:now},
+{icaoId:'KPOC',fltcat:'VFR',wdir:210,wspd:5,wgst:null,visib:10,temp:26,dewp:12,altim:29.98,clouds:[{cover:'SCT',base:3500}],rawOb:'KPOC 311755Z 21005KT 10SM SCT035 26/12 A2998',reportTime:now},
+{icaoId:'KCNO',fltcat:'VFR',wdir:230,wspd:6,wgst:null,visib:10,temp:24,dewp:11,altim:29.97,clouds:[{cover:'FEW',base:3800}],rawOb:'KCNO 311747Z 23006KT 10SM FEW038 24/11 A2997',reportTime:now},
+{icaoId:'KEMT',fltcat:'VFR',wdir:190,wspd:4,wgst:null,visib:10,temp:21,dewp:13,altim:29.98,clouds:[{cover:'SCT',base:3200}],rawOb:'KEMT 311747Z 19004KT 10SM SCT032 21/13 A2998',reportTime:now},
+];
+const T=[
+{icaoId:'KLAX',issueTime:now,rawTAF:'TAF KLAX 311730Z 3118/0124 12010G18KT P6SM SCT025 OVC140 FM312200 24008KT P6SM SCT040 FM010400 VRB03KT 3SM BR BKN008 FM011500 18008KT P6SM SCT025'},
+{icaoId:'KSNA',issueTime:now,rawTAF:'TAF KSNA 311730Z 3118/0118 20015G22KT P6SM SCT026 BKN035 FM312200 26006KT P6SM FEW030 FM010500 VRB03KT 2SM BR OVC006 FM011400 20008KT P6SM SCT020'},
+{icaoId:'KBUR',issueTime:now,rawTAF:'TAF KBUR 311730Z 3118/0118 17017G25KT P6SM FEW021 FM312100 25005KT P6SM SKC FM010400 VRB03KT 4SM BR HZ FEW008 FM011500 18006KT P6SM FEW025'},
+{icaoId:'KONT',issueTime:now,rawTAF:'TAF KONT 311730Z 3118/0118 25008KT P6SM SCT040 FM312300 VRB05KT P6SM SKC FM010600 VRB03KT 5SM HZ SCT015 FM011400 24008KT P6SM FEW035'},
+{icaoId:'KVNY',issueTime:now,rawTAF:'TAF KVNY 311730Z 3118/0118 15005KT 4SM HZ BKN018 OVC025 FM312100 28006KT P6SM SCT035 FM010300 VRB03KT 2SM BR OVC005 FM011400 20006KT P6SM SCT020'},
+{icaoId:'KSMO',issueTime:now,rawTAF:'TAF KSMO 311730Z 3118/0118 13006KT P6SM BKN015 OVC025 FM312100 24005KT P6SM FEW040 FM010300 VRB03KT 3SM BR BKN010 FM011500 22006KT P6SM SCT025'},
+{icaoId:'KLGB',issueTime:now,rawTAF:'TAF KLGB 311730Z 3118/0118 14004KT P6SM BKN031 FM312200 23005KT P6SM SCT035 FM010400 VRB03KT 3SM BR BKN009 FM011400 19007KT P6SM SCT025'},
+];
+metarData={};S.forEach(s=>{if(stations.includes(s.icaoId))metarData[s.icaoId]=s;});
+tafData={};T.forEach(t=>{if(stations.includes(t.icaoId))tafData[t.icaoId]=t;});
 }
 
 fetchAll();
